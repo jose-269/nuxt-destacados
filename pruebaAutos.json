@@ -1,0 +1,122 @@
+{
+  "data": [
+  {
+    "id": "0001",
+    "marca": "audi",
+    "anio": "2010",
+    "categoria": "automóviles",
+    "precio": "44490000",
+    "precioFin": "34900000",
+    "moneda": "$",
+    "transmision": "automática",
+    "combustible": "gasolina",
+    "kms": "89000",
+    "pic": "https://imgd.aeplcdn.com/0x0/n/cw/ec/27032/s60-exterior-right-front-three-quarter-3.jpeg"
+  },
+  {
+    "id": "0002",
+    "categoria": "camionetas",
+    "marca": "dongfeng",
+    "anio": "2012",
+    "precio": "14900000",
+    "precioFin": "13900000",
+    "moneda": "$",
+    "transmision": "automática",
+    "combustible": "diesel",
+    "kms": "124000",
+    "pic": "https://media.istockphoto.com/photos/illustration-of-generic-red-car-front-view-picture-id1145720458?k=20&m=1145720458&s=612x612&w=0&h=51ooOfUOao-3k9MJdmqsoEITBgdMQjdEdG35sczCgJs="
+  },
+  {
+    "id": "0003",
+    "categoria": "suv / station wagon",
+    "marca": "ford",
+    "anio": "2013",
+    "precio": "7490000",
+    "precioFin": "64900000",
+    "moneda": "$",
+    "transmision": "manual",
+    "combustible": "gasolina",
+    "kms": "140000",
+    "pic": "https://cf.ltkcdn.net/cars/images/std/223247-800x600r1-Car-Parked.jpg"
+  },
+  
+  {
+    "id": "0004",
+    "categoria": "automóviles",
+    "marca": "kia",
+    "anio": "2020",
+    "precio": "22900000",
+    "precioFin": "21900000",
+    "moneda": "$",
+    "transmision": "manual",
+    "combustible": "gasolina",
+    "kms": "50000",
+    "pic": "https://media.wired.com/photos/5d09594a62bcb0c9752779d9/master/pass/Transpo_G70_TA-518126.jpg"
+  },
+  {
+    "id": "0005",
+    "categoria": "camionetas",
+    "marca": "mercedes-benz",
+    "anio": "2018",
+    "precio": "26490000",
+    "precioFin": "25900000",
+    "moneda": "$",
+    "transmision": "automática",
+    "combustible": "diesel",
+    "kms": "81000",
+    "pic": "http://1.bp.blogspot.com/-83mxjsGz1Ao/TkViL9hReSI/AAAAAAAADTU/a1P0HMQbEPI/w1200-h630-p-k-no-nu/1968-Dodge-Charger-Black.jpg"
+  },
+  {
+    "id": "0006",
+    "categoria": "suv / station wagon",
+    "marca": "mitsubichi",
+    "anio": "2021",
+    "precio": "20900000",
+    "precioFin": "19900000",
+    "moneda": "$",
+    "transmision": "automática",
+    "combustible": "gasolina",
+    "kms": "180000",
+    "pic": "https://i.pinimg.com/originals/3b/c6/7b/3bc67be03d47e26808a2bc07f3a2a22a.jpg"
+  },
+  {
+    "id": "0007",
+    "categoria": "furgones",
+    "marca": "nissan",
+    "anio": "2021",
+    "precio": "15900000",
+    "precioFin": "14900000",
+    "moneda": "$",
+    "transmision": "automática",
+    "combustible": "diesel",
+    "kms": "30000",
+    "pic": "https://x-assets.autorevo-powersites.com/content/assets/clients/30c54b61-2e18-4534-b347-5367e7a27956/1968_chevy_nova_ss_DSC03288_1920.jpg"
+  },
+  {
+    "id": "0008",
+    "categoria": "automóviles",
+    "marca": "peugeot",
+    "anio": "2016",
+    "precio": "24559",
+    "precioFin": "23559",
+    "moneda": "USD",
+    "transmision": "automática",
+    "combustible": "gasolina",
+    "kms": "98000",
+    "pic": "https://cdn.shopify.com/s/files/1/1021/2921/articles/nissan-z-proto-front.jpg?v=1629268796"
+  },
+  {
+    "id": "0009",
+    "categoria": "camionetas",
+    "marca": "suzuki",
+    "anio": "2016",
+    "precio": "29495",
+    "precioFin": "28495",
+    "moneda": "USD",
+    "transmision": "manual",
+    "combustible": "gasolina",
+    "kms": "18000",
+    "pic": "https://dynaimage.cdn.cnn.com/cnn/c_fill,g_auto,w_1200,h_675,ar_16:9/https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F210908165711-02-bentley-bacalar-drive.jpg"
+  }
+]
+}
