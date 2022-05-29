@@ -1,12 +1,14 @@
 <template>
   <div class="container mb-5 py-3">
-    <!-- Resultados -->
     <div class="row">
-      <!-- cards -->
       <div class="col-md-4 pb-3" v-for="(auto, i) in fullCars" :key="i">
         <div class="card my-2" style="height: 100%">
           <router-link to="/auto">
-            <img :src="auto.url_foto_particular" class="card-img-top" alt="vehículo imagen" />
+            <img
+              :src="auto.url_foto_particular"
+              class="card-img-top"
+              alt="vehículo imagen"
+            />
           </router-link>
           <div class="card-body">
             <h5 class="card-title text-center text-uppercase">
@@ -14,53 +16,43 @@
             </h5>
             <hr />
             <h5 class="card-title text-center text-uppercase text-danger">
-              {{ auto.VCHPRECIO }}
+              $ {{ auto.VCHPRECIO.toLocaleString() }}
             </h5>
             <hr />
             <div class="row text-center pb-5">
               <div class="col-6 pt-2">
-                <i class="far fa-calendar-alt pe-2"></i>{{ auto.INTANO }}
+                <fa icon="calendar" /> {{ auto.INTANO }}
               </div>
               <div class="col-6 pt-2">
-                <i class="fas fa-code-branch"></i> {{ auto.TRANSMISION.replace('Transmisión ', '') }}
+                <fa icon="code-branch" />
+                {{ auto.TRANSMISION.replace("Transmisión ", "") }}
               </div>
               <div class="col-6 pt-2">
-                <i class="fas fa-gas-pump"></i> {{ auto.COMBUSTIBLE }}
+                <fa icon="gas-pump" /> {{ auto.COMBUSTIBLE }}
               </div>
               <div class="col-6 pt-2">
-                <i class="fas fa-road"></i>{{ auto.VCHKILOMETROS }} Kms
+                <fa icon="road" /> {{ auto.VCHKILOMETROS }} Kms
               </div>
             </div>
-            <div class="d-grid gap-2 d-md-block" style="position:absolute; bottom: 3%;">
+            <div
+              class="d-grid gap-2 d-md-block"
+              style="position: absolute; bottom: 3%"
+            >
               <a class="btn btn-dark">VER MÁS</a>
-              
             </div>
           </div>
         </div>
       </div>
-      <!-- cards -->
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "RandomCards",
-  props: {
-    autos: {
-      type: Array,
-    },
-  },
-  methods: {
-    ...mapMutations(["formatPrices"]),
-  },
   computed: {
-    ...mapState(["fullCars", "data", "categorias", "transmisiones", "filtrados", "combustibles"]),
-    ...mapGetters(["getFiltrosLateral"]),
-  },
-  created() {
-    this.formatPrices()
+    ...mapState(["fullCars"]),
   },
 };
 </script>

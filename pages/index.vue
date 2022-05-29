@@ -1,29 +1,33 @@
 <template>
-<div>
-  <Slider />
-  <RandomCars />
-
-</div>
+  <div>
+    <Slider />
+    <RandomCars />
+    <Mapa />
+    <Nuestro />
+  </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import Slider from "~/components/MainSlider.vue";
 import RandomCars from "~/components/RandomCards.vue";
+import Mapa from "~/components/Mapa.vue";
+import Nuestro from "~/components/NuestroStock.vue";
 
 export default {
   name: "Index",
-  layout: 'Destacados',
+  layout: "Destacados",
   components: {
     Slider,
-    RandomCars
-  }, 
-  methods: {
-    ...mapActions(["getData"])
+    RandomCars,
+    Nuestro,
+    Mapa,
   },
-  created () {
-    this.getData()
-  
+  methods: {
+    ...mapActions(["IndexData"]),
+  },
+  created() {
+    this.IndexData();
   },
 };
 </script>

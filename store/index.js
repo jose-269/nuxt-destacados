@@ -236,7 +236,7 @@ export const mutations = {
 
 export const actions = {
 	// CARGAR DATOS
-	async getData({ commit }) { 
+	async IndexData({ commit }) { 
 		const req =  axios.create({
 			baseURL: 'https://api.servicesdtk2.cl/v1',
 			headers: {
@@ -247,8 +247,9 @@ export const actions = {
 		try {
 			const response = await req.get('/cars');
 			const data = response.data;
-			commit('fullData', data);
-			console.log(data);
+			const mixData = data.sort( () => Math.random() - 0.5  ).slice(0,6);
+			commit('fullData', mixData);
+			console.log(mixData);
 		} catch (error) {
 			console.log(error);
 		}
