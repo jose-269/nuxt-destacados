@@ -28,7 +28,7 @@
             >
           </li>
           <li class="nav-item my-auto">
-            <nuxt-link class="nav-link" to="/seminuevos"
+            <nuxt-link class="nav-link" to="/Seminuevos"
               >SEMINUEVOS</nuxt-link
             >
           </li>
@@ -55,14 +55,14 @@
               class="dropdown-menu dropdown-primary dropdown-menu-end"
               aria-labelledby="navbarDropdownMenuLink"
             >
-              <a href="#" class="dropdown-item"
-                ><i class="fab fa-facebook-square"></i> Facebook</a
+              <nuxt-link to="/" class="dropdown-item"
+                ><i class="fab fa-facebook-square"></i> Facebook</nuxt-link
               >
-              <a href="#" class="dropdown-item"
-                ><i class="fab fa-instagram"></i> Instagram</a
+              <nuxt-link to="/" class="dropdown-item"
+                ><i class="fab fa-instagram"></i> Instagram</nuxt-link
               >
-              <a href="#" class="dropdown-item"
-                ><i class="fab fa-youtube"></i> Youtube</a
+              <nuxt-link to="/" class="dropdown-item"
+                ><i class="fab fa-youtube"></i> Youtube</nuxt-link
               >
             </div>
           </li>

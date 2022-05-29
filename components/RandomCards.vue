@@ -38,7 +38,7 @@
               class="d-grid gap-2 d-md-block"
               style="position: absolute; bottom: 3%"
             >
-              <a class="btn btn-dark">VER MÁS</a>
+              <button class="btn btn-dark">VER MÁS</button>
             </div>
           </div>
         </div>
