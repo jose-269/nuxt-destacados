@@ -23,12 +23,7 @@
           aria-controls="panelsStayOpen-collapseOne"
           >Ver más +</a
         > -->
-        <client-only >
-        <vue-slider
-          ref="slider"
-          v-model="value"
-        ></vue-slider>
-        </client-only>
+
       </div>
     </div>
 </div>
@@ -87,11 +82,11 @@ export default {
   //   methods: {
   //     ...mapMutations(["marcasObserver"])
   //   },
-  //   props: {
-  //     brand: {
-  //       type: Array,
-  //     },
-  //   },
+    props: {
+      brand: {
+        type: Array,
+      },
+    },
 };
 </script>
 

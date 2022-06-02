@@ -17,6 +17,12 @@ $ npm run start
 $ npm run generate
 ```
 
+# install sass 
+$ npm i -D sass-loader@10.1.1 --save-exact && npm i -D sass
+se installo version 10 por temas de webpack 5 
+
+
+
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
 ## Special Directories

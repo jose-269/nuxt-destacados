@@ -1,7 +1,7 @@
 <template>
   <div class="container mb-5 py-3">
     <div class="row">
-      <div class="col-md-4 pb-3" v-for="(auto, i) in fullCars" :key="i">
+      <div class="col-md-4 pb-3" v-for="(auto, i) in indexCars" :key="i">
         <div class="card my-2" style="height: 100%">
           <router-link to="/auto">
             <img
@@ -52,7 +52,7 @@ import { mapState } from "vuex";
 export default {
   name: "RandomCards",
   computed: {
-    ...mapState(["fullCars"]),
+    ...mapState(["indexCars"]),
   },
 };
 </script>

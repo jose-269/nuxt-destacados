@@ -24,10 +24,10 @@ export default {
     Mapa,
   },
   methods: {
-    ...mapActions(["IndexData"]),
+    ...mapActions(["getIndexData"]),
   },
   created() {
-    this.IndexData();
+    this.getIndexData();
   },
 };
 </script>

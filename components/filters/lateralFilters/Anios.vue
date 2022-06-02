@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import 'vue-slider-component/theme/antd.css'
 // import VueSlider xfrom "vue-slider-component"
 // import "vue-slider-component/theme/default.css"
 // import { mapState, mapMutations, mapGetters } from "vuex";
@@ -106,7 +107,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .custom-dot {
   width: 150%;
   height: 150%;
