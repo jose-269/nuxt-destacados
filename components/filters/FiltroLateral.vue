@@ -37,7 +37,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["seminuevos"]),
+    ...mapState(["carNumbers"]),
     // ...mapState(["categoriasToggle", "marcaToggle", "aniosToggle", "precioToggle", "transmisionToggle", "combustibleToggle"]),
     // ...mapGetters(["itemsCategorias", "itemsAnios", "itemsTransmision", "itemsCombustible", "itemsMarcas", "itemsPrecios"]),
     ...mapGetters(["brandsItems"]),
@@ -51,10 +51,10 @@ export default {
     Combustible,
   },
   methods: {
-    ...mapActions(["seminuevosData"]),
+    ...mapActions(["getTotalCars"]),
   },
   created () {
-    this.seminuevosData();
+    this.getTotalCars();
   },
 };
 </script>

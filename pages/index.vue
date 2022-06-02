@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import Slider from "~/components/MainSlider.vue";
 import RandomCars from "~/components/RandomCards.vue";
 import Mapa from "~/components/Mapa.vue";
@@ -25,6 +25,9 @@ export default {
   },
   methods: {
     ...mapActions(["getIndexData"]),
+  },
+  computed: {
+    ...mapState(["carNumbers"]),
   },
   created() {
     this.getIndexData();

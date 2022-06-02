@@ -5,6 +5,7 @@ import json from "../pruebaAutos.json";
 export const state = () => ({
   indexCars: [],
 	seminuevos: [],
+  carNumbers: 0,
   // SPINNER
   loader: false,
   data: json.data,
@@ -235,6 +236,10 @@ export const mutations = {
 		if (!data) return;
 		state.seminuevos = data;
 	},
+  fillCars(state,payload) {
+    const data = payload;
+    state.carNumbers = data;
+  },
   // FORMATEADOR DE PRECIOS CL Y USD
   formatPrices(state) {
     const filtradosCl = state.data.filter((el) => el.moneda === "$");
@@ -369,21 +374,38 @@ export const mutations = {
 };
 
 export const actions = {
-  // CARGAR DATOS
-  async getIndexData({ commit }) {
+
+  async getTotalCars({ commit }) {
     const req = axios.create({
       baseURL: "https://api.servicesdtk2.cl/v1",
       headers: {
         Authorization: `Bearer ${"d9982530-725d-4944-9601-4840556c99a8"}`,
       },
     });
-
     try {
-      const response = await req.get("/cars");
+      const response = await req.get("/carDealers/stock/total?CLIENTEID=452&TABLA=1");
+      const totalCarNumber = await response.data[0].TOTAL;
+      commit('fillCars', totalCarNumber);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  // CARGAR DATOS
+  async getIndexData( { state, commit }) {
+    const req = axios.create({
+      baseURL: "https://api.servicesdtk2.cl/v1",
+      headers: {
+        Authorization: `Bearer ${"d9982530-725d-4944-9601-4840556c99a8"}`,
+      },
+    });
+    const totalNumberCars = state.carNumbers
+    
+    try {
+      const response = await req.get(`/carDealers/stock?CLIENTEID=452&TABLA=1&PageNumber=1&PageSize=${totalNumberCars}`);
       const data = response.data;
       const mixData = data.sort(() => Math.random() - 0.5).slice(0, 6);
+      console.log(totalNumberCars);
       commit("indexData", mixData);
-      console.log(mixData);
     } catch (error) {
       console.log(error);
     }
@@ -408,19 +430,18 @@ export const actions = {
   async getBrands({ commit }) {
     commit('');
     const req =  axios.create({
-    baseURL: 'https://api.servicesdtk2.cl/v1',
-    headers: {
-    Authorization: `Bearer ${'d9982530-725d-4944-9601-4840556c99a8'}`
-    }
-    });
-    try {
+        baseURL: 'https://api.servicesdtk2.cl/v1',
+        headers: {
+        Authorization: `Bearer ${'d9982530-725d-4944-9601-4840556c99a8'}`
+        }
+      });
+      try {
+      const response = await req.get('/carDealers/stock?CLIENTEID=452&TABLA=1&PageNumber=1&PageSize=10');
+      const data = response.data;
+      console.log(data);
+      } catch (error) {
+      console.log(error);
       
-    const response = await req.get('/carDealers/stock?CLIENTEID=452&TABLA=1&PageNumber=1&PageSize=10');
-    const data = response.data;
-    console.log(data);
-    } catch (error) {
-    console.log(error);
-    
-    }
+      }
     }
 };
