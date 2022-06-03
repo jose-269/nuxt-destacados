@@ -24,13 +24,13 @@ export default {
     Mapa,
   },
   methods: {
-    ...mapActions(["getIndexData"]),
+    ...mapActions(["getData"]),
   },
   computed: {
     ...mapState(["carNumbers"]),
   },
   created() {
-    this.getIndexData();
+    this.getData();
   },
 };
 </script>

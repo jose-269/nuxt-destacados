@@ -2,28 +2,28 @@
   <div>
     <NavBar />
     <Nuxt />
-	<Footer />
+    <Footer />
   </div>
 </template>
 
 <script>
 import NavBar from "~/components/navBar.vue";
 import Footer from "~/components/Footer.vue";
-import {mapActions, mapState} from "vuex";
+import { mapState } from "vuex";
 export default {
   layout: "Destacados",
   components: {
     NavBar,
-	Footer
+    Footer,
   },
   methods: {
-     ...mapActions(["getTotalCars"]),
+    //  ...mapActions(["getTotalCars"]),
   },
   computed: {
     ...mapState(["carNumbers"]),
   },
-  created () {
-    this.getTotalCars();
+  created() {
+    // this.getTotalCars();
   },
 };
 </script>

@@ -4,6 +4,8 @@ import json from "../pruebaAutos.json";
 
 export const state = () => ({
   indexCars: [],
+  seminuevosCars: [],
+
 	seminuevos: [],
   carNumbers: 0,
   // SPINNER
@@ -231,6 +233,11 @@ export const mutations = {
     if (!data) return;
     state.indexCars = data;
   },
+  fillSeminuevosData(state, payload) {
+    const data = payload;
+    if (!data) return;
+    state.seminuevosCars = data;
+  },
 	seminuevosData(state, payload) {
 		const data = payload;
 		if (!data) return;
@@ -375,37 +382,44 @@ export const mutations = {
 
 export const actions = {
 
-  async getTotalCars({ commit }) {
-    const req = axios.create({
-      baseURL: "https://api.servicesdtk2.cl/v1",
-      headers: {
-        Authorization: `Bearer ${"d9982530-725d-4944-9601-4840556c99a8"}`,
-      },
-    });
-    try {
-      const response = await req.get("/carDealers/stock/total?CLIENTEID=452&TABLA=1");
-      const totalCarNumber = await response.data[0].TOTAL;
-      commit('fillCars', totalCarNumber);
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  // async getTotalCars({ commit }) {
+  //   const dataReq = axios.create({
+  //     baseURL: "https://api.servicesdtk2.cl/v1",
+  //     headers: {
+  //       Authorization: `Bearer ${"d9982530-725d-4944-9601-4840556c99a8"}`,
+  //     },
+  //   });
+  //   try {
+  //     const response = await dataReq.get("/carDealers/stock/total?CLIENTEID=452&TABLA=1");
+  //     const totalCarNumber = await response.data[0].TOTAL;
+  //     commit('fillCars', totalCarNumber);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // },
+
+
   // CARGAR DATOS
-  async getIndexData( { state, commit }) {
+  async getData( {  commit }) {
     const req = axios.create({
       baseURL: "https://api.servicesdtk2.cl/v1",
       headers: {
         Authorization: `Bearer ${"d9982530-725d-4944-9601-4840556c99a8"}`,
       },
     });
-    const totalNumberCars = state.carNumbers
+    
     
     try {
-      const response = await req.get(`/carDealers/stock?CLIENTEID=452&TABLA=1&PageNumber=1&PageSize=${totalNumberCars}`);
-      const data = response.data;
-      const mixData = data.sort(() => Math.random() - 0.5).slice(0, 6);
-      console.log(totalNumberCars);
-      commit("indexData", mixData);
+      const pageSizeResponse = await req.get("/carDealers/stock/total?CLIENTEID=452&TABLA=1");
+      const totalCarNumber = await pageSizeResponse.data[0].TOTAL;
+      const response = await req.get(`/carDealers/stock?CLIENTEID=452&TABLA=1&PageNumber=1&PageSize=${totalCarNumber}`);
+      const allData = response.data;
+
+      const indexData = allData.sort(() => Math.random() - 0.5).slice(0, 6);
+      
+      console.log(allData);
+      commit("indexData", indexData);
+      commit("fillSeminuevosData", allData);
     } catch (error) {
       console.log(error);
     }

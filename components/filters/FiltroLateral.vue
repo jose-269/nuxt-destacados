@@ -29,7 +29,7 @@ import Precio from "@/components/filters/lateralFilters/Precio.vue";
 import Transmision from "@/components/filters/lateralFilters/Transmision.vue";
 import Combustible from "@/components/filters/lateralFilters/Combustible.vue";
 // import { mapState, mapGetters} from "vuex"
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "FiltroLateral",
@@ -51,10 +51,10 @@ export default {
     Combustible,
   },
   methods: {
-    ...mapActions(["getTotalCars"]),
+    // ...mapActions(["getTotalCars"]),
   },
   created () {
-    this.getTotalCars();
+    // this.getTotalCars();
   },
 };
 </script>
