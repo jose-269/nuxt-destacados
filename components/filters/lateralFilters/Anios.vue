@@ -6,23 +6,27 @@
           RANGO DE AÑOS
         </p>
         <div class="container pb-2 shadow p-3 bg-body rounded-bottom">
-          <div class="py-4 px-3">
+          <div class="py-4 px-3" v-show="years[0] !== null">
             <client-only>
               <vue-slider
-               v-model="value"
-              
+                v-model="observerAnios"
+                :min = "years[0]"
+                :max = "years[1]"
                 :lazy="true"
                 :interval="1"
                 :process-style="{ backgroundColor: '#DC3545' }"
                 :tooltip="'always'"
                 :enable-cross="false"
+                :marks="yearsMinMax"
               >
                 <template v-slot:dot="{}">
                   <div :class="['custom-dot']"></div>
                 </template>
               </vue-slider>
             </client-only>
+            <!-- <div>{{years}}</div> -->
           </div>
+
         </div>
       </div>
     </div>
@@ -59,7 +63,7 @@
 import 'vue-slider-component/theme/antd.css'
 // import VueSlider xfrom "vue-slider-component"
 // import "vue-slider-component/theme/default.css"
-// import { mapState, mapMutations, mapGetters } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 // import $ from "jquery";
 export default {
   name: "Anios",
@@ -68,6 +72,7 @@ export default {
       value: [0, 30],
       min: 0,
       max: 100,
+
     };
   },
   //   data() {
@@ -76,34 +81,38 @@ export default {
   //       AniosMarks: [2010, 2021],
   //     };
   //   },
-  //   computed: {
-  //     observerAnios: {
-  //       get() {
-  //         return this.minMaxYear;
-  //       },
-  //       set(v) {
-  //          this.setYears(v);
-  //       }
-  //     },
-
-  //   ...mapState(["minAnios", "minMaxYear"]),
-  //   ...mapGetters(["pruebaGet"]),
-  //   },
-  //   methods: {
-  //     ...mapMutations(["getMinMaxYear", "setYears"]),
-  //   },
+    computed: {
+      observerAnios: {
+        get() {
+          return this.yearsMinMax;
+        },
+        set(v) {
+           this.setYears(v);
+        }
+      },
+      yearsMinMax() {
+        return [Math.min.apply(Math, this.years), Math.max.apply(Math, this.years)];
+      },
+    ...mapState(["minAnios", "minMaxYear"]),
+    // ...mapGetters(["pruebaGet"]),
+    },
+    methods: {
+      ...mapActions(["getData"]),
+      ...mapMutations(["getMinMaxYear", "setYears"]),
+    },
   //   components: {
   //     VueSlider,
   //   },
-  //   props: {
-  //     years: {
-  //       type: Array,
-  //     },
-  //   },
-  //   created () {
-  //     this.getMinMaxYear();
-  //     this.setYears();
-  //   },
+    props: {
+      years: {
+        type: Array,
+      },
+    },
+
+    created () {
+      this.getMinMaxYear();
+      this.setYears();
+    },
 };
 </script>
 

@@ -6,7 +6,7 @@ export const state = () => ({
   indexCars: [],
   seminuevosCars: [],
 
-	seminuevos: [],
+  seminuevos: [],
   carNumbers: 0,
   // SPINNER
   loader: false,
@@ -178,45 +178,56 @@ export const getters = {
   },
   /***  CATEGORIAS  ***/
   itemsCategorias(state) {
-    const categorias = state.data
-      .map((el) => el.categoria)
+    const categorias = state.seminuevosCars
+      .map((el) => el.CATEGORIAID)
       .filter((categoria, i, arr) => arr.indexOf(categoria) === i);
     return categorias;
   },
+  /***  MARCAS  ***/
+  brandsItems(state) {
+    const marcas = state.seminuevosCars
+      .map((el) => el.MARCA)
+      .filter((marca, i, arr) => arr.indexOf(marca) === i);
+    return marcas;
+  },
   /***  TRANSMISIONES  ***/
   itemsTransmision(state) {
-    const transmisiones = state.data
-      .map((el) => el.transmision)
-      .filter((transmision, i, arr) => arr.indexOf(transmision) === i);
-    return transmisiones;
+    const transmissionNameReplaced = state.seminuevosCars
+      .map((el) => el.TRANSMISION.replace("Transmisión ", ""))
+      .filter((transmission, i, arr) => arr.indexOf(transmission) === i);
+    return transmissionNameReplaced;
   },
   /***  COMBUSTIBLES  ***/
   itemsCombustible(state) {
-    const combustibles = state.data
-      .map((el) => el.combustible)
+    const fuels = state.seminuevosCars
+      .map((el) => el.COMBUSTIBLE)
       .filter((combustible, i, arr) => arr.indexOf(combustible) === i);
-    return combustibles;
+    return fuels;
   },
   /***  AÑOS  ***/
   itemsAnios(state) {
-    const anios = state.data
-      .map((el) => el.anio)
+    const anios = state.seminuevosCars
+      .map((el) => el.INTANO)
       .filter((anio, i, arr) => arr.indexOf(anio) === i);
     return anios;
   },
-  /***  AÑOS  ***/
+  yearsItems(state) {
+    let arr = [];
+    const anios = state.seminuevosCars
+      .map((el) => el.INTANO)
+      .filter((anio, i, arr) => arr.indexOf(anio) === i);
+      const min = Math.min.apply(null, anios) || 0;
+      const max = Math.max.apply(null, anios) || 0;
+      arr.push(min);
+      arr.push(max);
+    return arr;
+  },
+  /***  PRECIOS  ***/
   itemsPrecios(state) {
     const precios = state.data
       .map((el) => el.precio)
       .filter((precio, i, arr) => arr.indexOf(precio) === i);
     return precios;
-  },
-  /***  MARCAS  ***/
-  brandsItems(state) {
-    const marcas = state.seminuevos
-      .map((el) => el.MARCA)
-      .filter((marca, i, arr) => arr.indexOf(marca) === i);
-    return marcas;
   },
   comparadorSeleccion(state) {
     if (state.seleccionados.length > 3) {
@@ -238,12 +249,12 @@ export const mutations = {
     if (!data) return;
     state.seminuevosCars = data;
   },
-	seminuevosData(state, payload) {
-		const data = payload;
-		if (!data) return;
-		state.seminuevos = data;
-	},
-  fillCars(state,payload) {
+  seminuevosData(state, payload) {
+    const data = payload;
+    if (!data) return;
+    state.seminuevos = data;
+  },
+  fillCars(state, payload) {
     const data = payload;
     state.carNumbers = data;
   },
@@ -322,6 +333,26 @@ export const mutations = {
     if (!carga) return;
     state.marcas = carga;
   },
+  // RANGO DE AÑOS
+  getMinMaxYear(state) {
+    const anios = state.seminuevosCars.map((el) => el.INTANO);
+    console.log(anios);
+
+    // let arr = [];
+    // const anios = state.seminuevosCars
+    //   .map((el) => String(el.INTANO))
+    //   .filter((anio, i, arr) => arr.indexOf(anio) === i);
+    // const min = Math.min.apply(Math, anios);
+    // arr.push(min);
+    // const max = Math.max.apply(Math, anios);
+    // arr.push(max);
+    // state.minMaxYear = arr;
+  },
+  setYears(state, payload) {
+    const carga = payload;
+    if (!carga) return;
+    state.minMaxYear = carga;
+  },
   // OBSERVADOR DE COMPARADOR
   observadorSeleccionado(state, payload) {
     const carga = payload;
@@ -336,23 +367,6 @@ export const mutations = {
   },
   deleteTodosSeleccionados(state) {
     state.seleccionados = [];
-  },
-  // RANGO DE AÑOS
-  getMinMaxYear(state) {
-    let arr = [];
-    const anios = state.data
-      .map((el) => el.anio)
-      .filter((anio, i, arr) => arr.indexOf(anio) === i);
-    const min = Math.min.apply(Math, anios);
-    arr.push(min);
-    const max = Math.max.apply(Math, anios);
-    arr.push(max);
-    state.minMaxYear = arr;
-  },
-  setYears(state, payload) {
-    const carga = payload;
-    if (!carga) return;
-    state.minMaxYear = carga;
   },
   getMinMaxPrices(state) {
     let todosPrecios = [];
@@ -381,7 +395,6 @@ export const mutations = {
 };
 
 export const actions = {
-
   // async getTotalCars({ commit }) {
   //   const dataReq = axios.create({
   //     baseURL: "https://api.servicesdtk2.cl/v1",
@@ -398,26 +411,28 @@ export const actions = {
   //   }
   // },
 
-
   // CARGAR DATOS
-  async getData( {  commit }) {
+  async getData({ commit }) {
     const req = axios.create({
       baseURL: "https://api.servicesdtk2.cl/v1",
       headers: {
         Authorization: `Bearer ${"d9982530-725d-4944-9601-4840556c99a8"}`,
       },
     });
-    
-    
+
     try {
-      const pageSizeResponse = await req.get("/carDealers/stock/total?CLIENTEID=452&TABLA=1");
+      const pageSizeResponse = await req.get(
+        "/carDealers/stock/total?CLIENTEID=1066&TABLA=1"
+      );
       const totalCarNumber = await pageSizeResponse.data[0].TOTAL;
-      const response = await req.get(`/carDealers/stock?CLIENTEID=452&TABLA=1&PageNumber=1&PageSize=${totalCarNumber}`);
+      const response = await req.get(
+        `/carDealers/stock?CLIENTEID=1066&TABLA=1&PageNumber=1&PageSize=${totalCarNumber}`
+      );
       const allData = response.data;
 
       const indexData = allData.sort(() => Math.random() - 0.5).slice(0, 6);
-      
-      console.log(allData);
+
+      // console.log(allData);
       commit("indexData", indexData);
       commit("fillSeminuevosData", allData);
     } catch (error) {
@@ -442,20 +457,21 @@ export const actions = {
     }
   },
   async getBrands({ commit }) {
-    commit('');
-    const req =  axios.create({
-        baseURL: 'https://api.servicesdtk2.cl/v1',
-        headers: {
-        Authorization: `Bearer ${'d9982530-725d-4944-9601-4840556c99a8'}`
-        }
-      });
-      try {
-      const response = await req.get('/carDealers/stock?CLIENTEID=452&TABLA=1&PageNumber=1&PageSize=10');
+    commit("");
+    const req = axios.create({
+      baseURL: "https://api.servicesdtk2.cl/v1",
+      headers: {
+        Authorization: `Bearer ${"d9982530-725d-4944-9601-4840556c99a8"}`,
+      },
+    });
+    try {
+      const response = await req.get(
+        "/carDealers/stock?CLIENTEID=452&TABLA=1&PageNumber=1&PageSize=10"
+      );
       const data = response.data;
       console.log(data);
-      } catch (error) {
+    } catch (error) {
       console.log(error);
-      
-      }
     }
+  },
 };

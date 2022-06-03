@@ -4,10 +4,10 @@
       CATEGORÍA
     </p>
     <div class="container ps-xs-5 ps-sm-5 ps-md-2 ps-lg-2 ps-xl-5 shadow p-3 bg-body rounded-bottom">
-      <div >
-        <input class="form-check-input" type="checkbox" />
+      <div class="form-check" v-for="(item, i) in categories" :key="i">
+        <input class="form-check-input" type="checkbox" :id="item" :value="item" />
         <label class="form-check-label text-capitalize">
-          Categoria
+          {{ item }}
         </label>
       </div>
     </div>
@@ -46,11 +46,11 @@ export default {
 //   methods: {
 //     ...mapMutations(["categoriasObserver"]),
 //   },
-//   props: {
-//     categories: {
-//       type: Array,
-//     },
-//   },
+  props: {
+    categories: {
+      type: Array,
+    },
+  },
 };
 </script>
 

@@ -3,14 +3,14 @@
     <div class="row">
       <div class="col-sm-12 px-0">
         <div class="pt-5">
-          <Categorias />
+          <Categorias :categories="itemsCategorias" />
           <!-- <Marca /> -->
-          <Anios />
-          <Precio />
-          <Transmision />
-          <Combustible />
-          <!-- <Categorias :categories="itemsCategorias" v-if="categoriasToggle" /> -->
           <Brand :brand="brandsItems" />
+          <Anios :years="yearsItems" />
+          <Precio />
+          <Transmision :transmission="itemsTransmision" />
+          <Combustible :fuel="itemsCombustible" />
+          <!-- <Categorias :categories="itemsCategorias" v-if="categoriasToggle" /> -->
           <!--<Anios :years="itemsAnios" v-if="aniosToggle"/>
           <Precio :prices="itemsPrecios" v-if="precioToggle" />
           <Transmision :transmission="itemsTransmision" v-if="transmisionToggle" />
@@ -29,7 +29,7 @@ import Precio from "@/components/filters/lateralFilters/Precio.vue";
 import Transmision from "@/components/filters/lateralFilters/Transmision.vue";
 import Combustible from "@/components/filters/lateralFilters/Combustible.vue";
 // import { mapState, mapGetters} from "vuex"
-import { mapState, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "FiltroLateral",
@@ -37,10 +37,10 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["carNumbers"]),
+    // ...mapState(["carNumbers"]),
     // ...mapState(["categoriasToggle", "marcaToggle", "aniosToggle", "precioToggle", "transmisionToggle", "combustibleToggle"]),
     // ...mapGetters(["itemsCategorias", "itemsAnios", "itemsTransmision", "itemsCombustible", "itemsMarcas", "itemsPrecios"]),
-    ...mapGetters(["brandsItems"]),
+    ...mapGetters(["itemsCategorias", "brandsItems", "itemsAnios", "itemsTransmision", "itemsCombustible", "yearsItems"]),
   },
   components: {
     Categorias,
@@ -50,11 +50,11 @@ export default {
     Transmision,
     Combustible,
   },
-  methods: {
-    // ...mapActions(["getTotalCars"]),
+  beforeMount() {
+    this.yearsItems;
   },
   created () {
-    // this.getTotalCars();
+    this.yearsItems;
   },
 };
 </script>

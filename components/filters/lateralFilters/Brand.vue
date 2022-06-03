@@ -8,13 +8,13 @@
       <div
         class="container pb-2 ps-xs-5 ps-sm-5 ps-md-2 ps-lg-2 ps-xl-5 shadow p-3 bg-body rounded-bottom"
       >
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" />
+        <div class="form-check" v-for="(item, i) in brand" :key="i">
+          <input class="form-check-input" type="checkbox" :value="item" :id="item" />
           <label class="form-check-label text-capitalize" for="flexCheckDefault">
-            MARCA
+             {{ item }}
           </label>
         </div>
-        <!-- <a
+         <a
           href="#"
           type="button"
           data-bs-toggle="collapse"
@@ -22,7 +22,7 @@
           aria-expanded="true"
           aria-controls="panelsStayOpen-collapseOne"
           >Ver más +</a
-        > -->
+        > 
 
       </div>
     </div>
@@ -65,7 +65,7 @@ export default {
   name: "Marca",
   data() {
     return {
-      value: 0,
+      
     };
   },
   //   computed: {

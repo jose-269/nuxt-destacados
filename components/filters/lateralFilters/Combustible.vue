@@ -14,15 +14,14 @@
         rounded-bottom
       "
     >
-      <div class="form-check" >
+      <div class="form-check" v-for="(item, i ) in fuel"  :key="i">
         <input
           class="form-check-input"
           type="checkbox"
-        
+          :value="item" :id="item"
         />
         <label class="form-check-label text-capitalize">
-          <!-- {{ item }} -->
-          Combustible
+          {{ item }}
         </label>
       </div>
     </div>
@@ -47,11 +46,11 @@ export default {
 //   methods: {
 //     ...mapMutations(["combustiblesObserver"])
 //   },
-//   props: {
-//     fuel: {
-//       type: Array,
-//     },
-//   },
+  props: {
+    fuel: {
+      type: Array,
+    },
+  },
 };
 </script>
 

@@ -9,7 +9,8 @@
 <script>
 import NavBar from "~/components/navBar.vue";
 import Footer from "~/components/Footer.vue";
-import { mapState } from "vuex";
+import { mapActions, } from "vuex";
+
 export default {
   layout: "Destacados",
   components: {
@@ -17,13 +18,12 @@ export default {
     Footer,
   },
   methods: {
-    //  ...mapActions(["getTotalCars"]),
+      ...mapActions(["getData"]),
   },
   computed: {
-    ...mapState(["carNumbers"]),
   },
   created() {
-    // this.getTotalCars();
+    this.getData();
   },
 };
 </script>

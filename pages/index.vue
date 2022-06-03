@@ -27,7 +27,7 @@ export default {
     ...mapActions(["getData"]),
   },
   computed: {
-    ...mapState(["carNumbers"]),
+
   },
   created() {
     this.getData();
