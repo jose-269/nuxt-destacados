@@ -5,6 +5,10 @@ import json from "../pruebaAutos.json";
 export const state = () => ({
   indexCars: [],
   seminuevosCars: [],
+  minMaxYears : [],
+  minMaxPrices : [],            
+
+
 
   seminuevos: [],
   carNumbers: 0,
@@ -249,6 +253,21 @@ export const mutations = {
     if (!data) return;
     state.seminuevosCars = data;
   },
+  fillminMaxYears(state, payload) {
+    const data = payload;
+    if (!data) return
+    state.minMaxYears = data;
+  },
+  fillminMaxPrices(state, payload) {
+    const data = payload;
+    if (!data) return
+    state.minMaxPrices = data;
+  },
+
+
+
+
+
   seminuevosData(state, payload) {
     const data = payload;
     if (!data) return;
@@ -428,48 +447,31 @@ export const actions = {
       const response = await req.get(
         `/carDealers/stock?CLIENTEID=1066&TABLA=1&PageNumber=1&PageSize=${totalCarNumber}`
       );
-      const allData = response.data;
+      // All Data
+      const roughData = response.data;
+      
+      //Min Max years
+      let minMaxyearsArr = [];
+      const minMaxYears = roughData.map((obj) => obj.INTANO).filter((el,i,arr) => arr.indexOf(el) === i);
+      const min = Math.min.apply(Math, minMaxYears);
+      minMaxyearsArr.push(min);
+      const max = Math.max.apply(Math, minMaxYears);
+      minMaxyearsArr.push(max);
+      commit("fillminMaxYears", minMaxyearsArr);
+      // Min Max Prices
+      let minMaxPricesArr = [];
+      const minMaxPrices = roughData.map((obj) => obj.VCHPRECIO).filter((el,i,arr) => arr.indexOf(el) === i);
+      const minPrice = Math.min.apply(Math, minMaxPrices);
+      minMaxPricesArr.push(minPrice);
+      const maxPrice = Math.max.apply(Math, minMaxPrices);
+      minMaxPricesArr.push(maxPrice);
+      commit("fillminMaxPrices", minMaxPricesArr);
 
-      const indexData = allData.sort(() => Math.random() - 0.5).slice(0, 6);
-
-      // console.log(allData);
+      // Index data
+      const indexData = roughData.sort(() => Math.random() - 0.5).slice(0, 6);
       commit("indexData", indexData);
-      commit("fillSeminuevosData", allData);
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  async seminuevosData({ commit }) {
-    const req = axios.create({
-      baseURL: "https://api.servicesdtk2.cl/v1",
-      headers: {
-        Authorization: `Bearer ${"d9982530-725d-4944-9601-4840556c99a8"}`,
-      },
-    });
-
-    try {
-      const response = await req.get("/cars");
-      const data = response.data;
-      commit("seminuevosData", data);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  async getBrands({ commit }) {
-    commit("");
-    const req = axios.create({
-      baseURL: "https://api.servicesdtk2.cl/v1",
-      headers: {
-        Authorization: `Bearer ${"d9982530-725d-4944-9601-4840556c99a8"}`,
-      },
-    });
-    try {
-      const response = await req.get(
-        "/carDealers/stock?CLIENTEID=452&TABLA=1&PageNumber=1&PageSize=10"
-      );
-      const data = response.data;
-      console.log(data);
+      //Seminuevos data
+      commit("fillSeminuevosData", roughData);
     } catch (error) {
       console.log(error);
     }
