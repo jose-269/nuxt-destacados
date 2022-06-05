@@ -19,6 +19,7 @@
           class="form-check-input"
           type="checkbox"
           :value="item" :id="item"
+          v-model="fuelsValue"
         />
         <label class="form-check-label text-capitalize">
           {{ item }}
@@ -29,23 +30,23 @@
 </template>
 
 <script>
-// import {mapState, mapMutations} from "vuex";
+import {mapState, mapMutations} from "vuex";
 export default {
   name: "Combustible",
-//   computed: {
-//     ...mapState(["combustibles"]),
-//     observadorCombustibles: {
-//       get() {
-//         return this.combustibles;
-//       },
-//       set(v) {
-//         this.combustiblesObserver(v);
-//       }
-//     }
-//   },
-//   methods: {
-//     ...mapMutations(["combustiblesObserver"])
-//   },
+  computed: {
+    ...mapState(["selectedFuels"]),
+    fuelsValue: {
+      get() {
+        return this.selectedFuels;
+      },
+      set(v) {
+        this.fuelsObserver(v);
+      }
+    }
+  },
+  methods: {
+    ...mapMutations(["fuelsObserver"])
+  },
   props: {
     fuel: {
       type: Array,

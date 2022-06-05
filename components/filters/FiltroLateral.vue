@@ -4,17 +4,11 @@
       <div class="col-sm-12 px-0">
         <div class="pt-5">
           <Categorias :categories="itemsCategorias" />
-          <!-- <Marca /> -->
           <Brand :brand="brandsItems" />
-          <Anios :years="yearsItems" />
+          <Anios />
           <Precio />
           <Transmision :transmission="itemsTransmision" />
           <Combustible :fuel="itemsCombustible" />
-          <!-- <Categorias :categories="itemsCategorias" v-if="categoriasToggle" /> -->
-          <!--<Anios :years="itemsAnios" v-if="aniosToggle"/>
-          <Precio :prices="itemsPrecios" v-if="precioToggle" />
-          <Transmision :transmission="itemsTransmision" v-if="transmisionToggle" />
-          <Combustible :fuel="itemsCombustible" v-if="combustibleToggle"/> -->
         </div>
       </div>
     </div>

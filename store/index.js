@@ -5,8 +5,17 @@ import json from "../pruebaAutos.json";
 export const state = () => ({
   indexCars: [],
   seminuevosCars: [],
+  selectedBrands: [],
+  selectedCategories: [],
   minMaxYears : [],
-  minMaxPrices : [],            
+  selectedYears: [],
+  minMaxPrices : [],
+  selectedPrices: [],  
+  selectedTransmisions: [],
+  selectedFuels: [],
+
+
+
 
 
 
@@ -257,12 +266,52 @@ export const mutations = {
     const data = payload;
     if (!data) return
     state.minMaxYears = data;
+    state.selectedYears = data;
   },
   fillminMaxPrices(state, payload) {
     const data = payload;
     if (!data) return
     state.minMaxPrices = data;
+    state.selectedPrices = data;
   },
+  //OBSERVADOR DE MARCAS
+  brandsObserver(state, payload) {
+    const carga = payload;
+    if (!carga) return;
+    state.selectedBrands = carga;
+  },
+  // OBSERVADOR DE CATEGORIAS
+  categoriesObserver(state, payload) {
+    const carga = payload;
+    if (!carga) return;
+    state.selectedCategories = carga;
+  },
+
+  // OBSERVADOR DE TRANSMISION
+  transmissionsObserver(state, payload) {
+    const carga = payload;
+    if (!carga) return;
+    state.selectedTransmisions = carga;
+  },
+  //OBSERVADOR DE COMBUSTIBLE
+  fuelsObserver(state, payload) {
+    const carga = payload;
+    if (!carga) return;
+    state.selectedFuels = carga;
+  },
+  // OBSERVADOR ANOS
+  yearsObserver(state, payload) {
+    const carga = payload;
+    if (!carga) return;
+    state.selectedYears = carga;
+  },
+  // OBSERVADOR PRECIOS
+  pricesObserver(state, payload) {
+    const carga = payload;
+    if (!carga) return;
+    state.selectedPrices = carga;
+  },
+
 
 
 
@@ -328,50 +377,7 @@ export const mutations = {
     state.buscador = carga;
     console.log(carga);
   },
-  // OBSERVADOR DE CATEGORIAS
-  categoriasObserver(state, payload) {
-    const carga = payload;
-    if (!carga) return;
-    state.categorias = carga;
-  },
-  // OBSERVADOR DE TRANSMISION
-  transmisionObserver(state, payload) {
-    const carga = payload;
-    if (!carga) return;
-    state.transmisiones = carga;
-  },
-  //OBSERVADOR DE COMBUSTIBLE
-  combustiblesObserver(state, payload) {
-    const carga = payload;
-    if (!carga) return;
-    state.combustibles = carga;
-  },
-  //OBSERVADOR DE MARCAS
-  marcasObserver(state, payload) {
-    const carga = payload;
-    if (!carga) return;
-    state.marcas = carga;
-  },
-  // RANGO DE AÑOS
-  getMinMaxYear(state) {
-    const anios = state.seminuevosCars.map((el) => el.INTANO);
-    console.log(anios);
 
-    // let arr = [];
-    // const anios = state.seminuevosCars
-    //   .map((el) => String(el.INTANO))
-    //   .filter((anio, i, arr) => arr.indexOf(anio) === i);
-    // const min = Math.min.apply(Math, anios);
-    // arr.push(min);
-    // const max = Math.max.apply(Math, anios);
-    // arr.push(max);
-    // state.minMaxYear = arr;
-  },
-  setYears(state, payload) {
-    const carga = payload;
-    if (!carga) return;
-    state.minMaxYear = carga;
-  },
   // OBSERVADOR DE COMPARADOR
   observadorSeleccionado(state, payload) {
     const carga = payload;
@@ -398,11 +404,7 @@ export const mutations = {
     todosPrecios.push(max);
     state.minMaxPrices = todosPrecios;
   },
-  setPrices(state, payload) {
-    const carga = payload;
-    if (!carga) return;
-    state.minMaxPrices = carga;
-  },
+
   fillData(state, payload) {
     const carga = payload;
     if (!carga) return;

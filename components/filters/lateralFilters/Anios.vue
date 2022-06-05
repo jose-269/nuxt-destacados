@@ -9,7 +9,7 @@
           <div class="py-4 px-3" v-if="minMaxYears">
             <client-only>
               <vue-slider
-                v-model="observerAnios"
+                v-model="observerVal"
                 :min = "minMaxYears[0]"
                 :max = "minMaxYears[1]"
                 :lazy="true"
@@ -34,52 +34,28 @@
 
 <script>
 import 'vue-slider-component/theme/antd.css'
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "Anios",
-  data() {
-    return {
-      // value: [0, 30],
-      // min: 0,
-      // max: 100,
-
-    };
-  },
-  //   data() {
-  //     return {
-  //       anios: [Math.min.apply(Math, this.years), Math.max.apply(Math, this.years)],
-  //       AniosMarks: [2010, 2021],
-  //     };
-  //   },
     computed: {
-      observerAnios: {
+      observerVal: {
         get() {
-          return this.minMaxYears;
+          return this.selectedYears;
         },
         set(v) {
-           this.setYears(v);
+          console.log(v);
+           this.yearsObserver(v);
         }
       },
-      yearsMinMax() {
-        return [Math.min.apply(Math, this.years), Math.max.apply(Math, this.years)];
-      },
-    ...mapState(["minMaxYears"]),
-    // ...mapGetters(["pruebaGet"]),
+    ...mapState(["minMaxYears", "selectedYears"]),
     },
     methods: {
-      ...mapMutations(["setYears"]),
+      ...mapMutations(["yearsObserver"]),
     },
-  //   components: {
-  //     VueSlider,
-  //   },
     props: {
       years: {
         type: Array,
       },
-    },
-
-    created () {
-      this.setYears();
     },
 };
 </script>

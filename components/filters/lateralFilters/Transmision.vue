@@ -20,6 +20,7 @@
           type="checkbox"
           :value="item" 
           :id="item"
+          v-model="transmissionsValue"
         />
         <label class="form-check-label text-capitalize">
           {{ item }}
@@ -30,29 +31,27 @@
 </template>
 
 <script>
-// import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "Transmision",
+    computed: {
+    ...mapState(["selectedTransmisions"]),
+    transmissionsValue: {
+      get() {
+        return this.selectedTransmisions;
+      },
+      set(v) {
+        this.transmissionsObserver(v);
+      },
+    },
+  },
+  methods: {
+    ...mapMutations(["transmissionsObserver"]),
+  },
   props: {
     transmission: {
       type: Array,
     },
   },
-//   computed: {
-//     ...mapState(["transmisiones"]),
-//     observadorTransmision: {
-//       get() {
-//         return this.transmisiones;
-//       },
-//       set(v) {
-//         this.transmisionObserver(v);
-//       },
-//     },
-//   },
-//   methods: {
-//     ...mapMutations(["transmisionObserver"]),
-//   },
 };
 </script>
-
-<style></style>

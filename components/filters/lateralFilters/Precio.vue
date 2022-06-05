@@ -9,7 +9,7 @@
           <div class="py-4 px-3">
             <client-only>
               <vue-slider
-                v-model="observerPrecios"
+                v-model="observerVal"
                 :min="minMaxPrices[0]"
                 :max="minMaxPrices[1]"
                 :lazy="true"
@@ -42,33 +42,19 @@ export default {
     };
   },
   computed: {
-    observerPrecios: {
+    observerVal: {
       get() {
-        return this.minMaxPrices;
+        return this.selectedPrices;
       },
       set(v) {
-        this.setPrices(v);
+        this.pricesObserver(v);
       },
     },
-    ...mapState(["minMaxPrices"]),
+    ...mapState(["minMaxPrices", "selectedPrices"]),
   },
   methods: {
-    ...mapMutations(["setPrices"]),
+    ...mapMutations(["pricesObserver"]),
   },
-  //   methods: {
-  //     ...mapMutations(["setPrices", "getMinMaxPrices"]),
-  //   },
-  //   created () {
-  //     this.getMinMaxPrices();
-  //   },
-  //   components: {
-  //     VueSlider,
-  //   },
-  //   props: {
-  //     prices: {
-  //       type: Array,
-  //     },
-  //   },
 };
 </script>
 
