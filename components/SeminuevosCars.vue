@@ -3,12 +3,12 @@
     <div class="row">
       <div
         class="col-md-6 col-lg-4 pb-3"
-        v-for="(auto, i) in getFiltrosLateral"
+        v-for="(car, i) in getFiltrosLateral"
         :key="i"
       >
         <div class="card my-2" style="height: 100%">
           <!-- <nuxt-link  :to="`/autos/${auto.id}`"> -->
-            <img :src="auto.pic" class="card-img-top" alt="vehículo imagen" />
+            <img :src="car.url_foto_particular" class="card-img-top" alt="vehículo imagen" />
           <!-- </nuxt-link > -->
           <!-- <div class="form-check form-check-inline comparar-check p-0 rounded bg-light">
             <input class="form-check-input ms-1" type="checkbox" :value="auto" v-model="seleccionador"/>
@@ -16,25 +16,25 @@
           </div> -->
           <div class="card-body d-flex flex-column">
             <h5 class="icedcard-title text-center text-uppercase">
-              {{ auto.marca }}
+              {{ car.MARCA }}
             </h5>
             <hr />
             <h5 class="card-title text-center text-uppercase text-danger">
-              {{ auto.formatPrecio }}
+              $ {{ car.VCHPRECIO.toLocaleString() }}
             </h5>
             <hr />
             <div class="row text-center pb-3">
               <div class="col-6 pt-2">
-                <i class="far fa-calendar-alt pe-2"></i>{{ auto.anio }}
+                 <fa icon="calendar" />{{ car.INTANO }}
               </div>
               <div class="col-6 pt-2">
-                <i class="fas fa-code-branch"></i> {{ auto.transmision }}
+                <fa icon="code-branch" />{{ car.TRANSMISION.replace("Transmisión ", "") }}
               </div>
               <div class="col-6 pt-2">
-                <i class="fas fa-gas-pump"></i> {{ auto.combustible }}
+                 <fa icon="gas-pump" /> {{ car.COMBUSTIBLE }}
               </div>
               <div class="col-6 pt-2">
-                <i class="fas fa-road"></i>{{ auto.formatKms }} Kms
+               <fa icon="road" />{{ car.VCHKILOMETROS.replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} Kms
               </div>
             </div>
             <div class="d-flex justify-content-between align-items-end mt-auto" >

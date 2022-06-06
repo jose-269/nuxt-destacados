@@ -67,7 +67,7 @@ export default {
   box-shadow: 0 10px 20px #a7a7a7;
 }
 .card-img-top {
-  height: 180px;
-  object-fit: cover;
+  height: 100%;
+  width: 100%;
 }
 </style>

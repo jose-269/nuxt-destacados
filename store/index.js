@@ -7,17 +7,12 @@ export const state = () => ({
   seminuevosCars: [],
   selectedBrands: [],
   selectedCategories: [],
-  minMaxYears : [],
+  minMaxYears: [],
   selectedYears: [],
-  minMaxPrices : [],
-  selectedPrices: [],  
+  minMaxPrices: [],
+  selectedPrices: [],
   selectedTransmisions: [],
   selectedFuels: [],
-
-
-
-
-
 
   seminuevos: [],
   carNumbers: 0,
@@ -66,127 +61,232 @@ export const state = () => ({
 
 export const getters = {
   getFiltrosLateral(state) {
-    // BUSCADOR POR PALABRA
-    if (state.buscador)
-      return state.data.filter(
-        (word) =>
-          word.marca.match(state.buscador.toLocaleLowerCase()) ||
-          word.anio.match(state.buscador) ||
-          word.transmision.match(state.buscador.toLocaleLowerCase())
+    // CATEGORIA MARCA TRANSMISION COMBUSTIBLE
+    if (
+      state.selectedCategories.length &&
+      state.selectedBrands.length &&
+      state.selectedTransmisions.length &&
+      state.selectedFuels.length
+    )
+      return state.seminuevosCars.filter(
+        (obj) =>
+          state.selectedCategories.includes(obj.CATEGORIAID) &&
+          state.selectedBrands.includes(obj.MARCA) &&
+          state.selectedTransmisions.includes(obj.TRANSMISION.replace("Transmisión ", "")) &&
+          state.selectedFuels.includes(obj.COMBUSTIBLE) &&
+          state.selectedYears[0] <= obj.INTANO &&
+          state.selectedYears[1] >= obj.INTANO &&
+          state.selectedPrices[0] <= obj.VCHPRECIO &&
+          state.selectedPrices[1] >= obj.VCHPRECIO
       );
+      // CATEGORIA Y MARCAS
+    else if (state.selectedCategories.length && state.selectedBrands.length)
+      return state.seminuevosCars.filter(
+        (obj) =>
+          state.selectedCategories.includes(obj.CATEGORIAID) &&
+          state.selectedBrands.includes(obj.MARCA) &&
+          state.selectedYears[0] <= obj.INTANO &&
+          state.selectedYears[1] >= obj.INTANO &&
+          state.selectedPrices[0] <= obj.VCHPRECIO &&
+          state.selectedPrices[1] >= obj.VCHPRECIO
+      );
+      // CATEGORIAS Y TRANSMISION
+      else if(state.selectedCategories.length && state.selectedTransmisions.length) 
+        return state.seminuevosCars.filter(
+        (obj) => state.selectedCategories.includes(obj.CATEGORIAID) && 
+        state.selectedTransmisions.includes(obj.TRANSMISION.replace("Transmisión ", "")) &&
+        state.selectedYears[0] <= obj.INTANO &&
+        state.selectedYears[1] >= obj.INTANO &&
+        state.selectedPrices[0] <= obj.VCHPRECIO &&
+        state.selectedPrices[1] >= obj.VCHPRECIO
+      );
+      // CATEGORIAS Y COMBUSTIBLE
+      else if(state.selectedCategories.length && state.selectedFuels.length) 
+        return state.seminuevosCars.filter(
+          (obj) => state.selectedCategories.includes(obj.CATEGORIAID) &&  
+          state.selectedFuels.includes(obj.COMBUSTIBLE) &&
+          state.selectedYears[0] <= obj.INTANO &&
+          state.selectedYears[1] >= obj.INTANO &&
+          state.selectedPrices[0] <= obj.VCHPRECIO &&
+          state.selectedPrices[1] >= obj.VCHPRECIO 
+      );
+    // SOLO CATEGORIAS
+    else if (state.selectedCategories.length)
+      return state.seminuevosCars.filter(
+        (obj) =>
+          state.selectedCategories.includes(obj.CATEGORIAID) &&
+          state.selectedYears[0] <= obj.INTANO &&
+          state.selectedYears[1] >= obj.INTANO &&
+          state.selectedPrices[0] <= obj.VCHPRECIO &&
+          state.selectedPrices[1] >= obj.VCHPRECIO
+      );
+    // SOLO MARCAS
+    else if (state.selectedBrands.length)
+      return state.seminuevosCars.filter(
+        (obj) =>
+          state.selectedBrands.includes(obj.MARCA) &&
+          state.selectedYears[0] <= obj.INTANO &&
+          state.selectedYears[1] >= obj.INTANO &&
+          state.selectedPrices[0] <= obj.VCHPRECIO &&
+          state.selectedPrices[1] >= obj.VCHPRECIO
+      );
+    // SOLO TRANSMISION
+    else if (state.selectedTransmisions.length)
+      return state.seminuevosCars.filter((obj) =>
+        state.selectedTransmisions.includes(
+          obj.TRANSMISION.replace("Transmisión ", "") &&
+            state.selectedYears[0] <= obj.INTANO &&
+            state.selectedYears[1] >= obj.INTANO &&
+            state.selectedPrices[0] <= obj.VCHPRECIO &&
+            state.selectedPrices[1] >= obj.VCHPRECIO
+        )
+      );
+    // SOLO COMBUSTIBLE
+    else if (state.selectedFuels.length)
+      return state.seminuevosCars.filter(
+        (obj) =>
+          state.selectedFuels.includes(obj.COMBUSTIBLE) &&
+          state.selectedYears[0] <= obj.INTANO &&
+          state.selectedYears[1] >= obj.INTANO &&
+          state.selectedPrices[0] <= obj.VCHPRECIO &&
+          state.selectedPrices[1] >= obj.VCHPRECIO
+      );
+    // SOLO ANIOS Y PRECIO
+    else if (
+      !state.selectedFuels.length &&
+      !state.selectedTransmisions.length &&
+      !state.selectedBrands.length &&
+      !state.selectedCategories.length
+    )
+      return state.seminuevosCars.filter(
+        (obj) =>
+          state.selectedYears[0] <= obj.INTANO &&
+          state.selectedYears[1] >= obj.INTANO &&
+          state.selectedPrices[0] <= obj.VCHPRECIO &&
+          state.selectedPrices[1] >= obj.VCHPRECIO
+      );
+    else return state.seminuevosCars;
+
+    // if (state.buscador)
+    //   return state.data.filter(
+    //     (word) =>
+    //       word.marca.match(state.buscador.toLocaleLowerCase()) ||
+    //       word.anio.match(state.buscador) ||
+    //       word.transmision.match(state.buscador.toLocaleLowerCase())
+    //   );
     // FIN BUSCADOR
     // CHECKBOXES
-    if (
-      state.categorias.length &&
-      state.marcas.length &&
-      state.transmisiones.length &&
-      state.combustibles.length
-    )
-      return state.data.filter(
-        (obj) =>
-          state.categorias.includes(obj.categoria) &&
-          state.marcas.includes(obj.marca) &&
-          state.transmisiones.includes(obj.transmision) &&
-          state.combustibles.includes(obj.combustible) &&
-          state.minMaxYear[0] <= obj.anio &&
-          state.minMaxYear >= obj.anio
-      );
-    // if(state.minMaxYear) return state.data.filter(obj => state.minMaxYear[0] <= obj.anio)
-    else if (
-      state.categorias.length &&
-      state.marcas.length &&
-      state.transmisiones.length
-    )
-      return state.data.filter(
-        (obj) =>
-          state.categorias.includes(obj.categoria) &&
-          state.marcas.includes(obj.marca) &&
-          state.transmisiones.includes(obj.transmision)
-      );
-    else if (
-      state.categorias.length &&
-      state.marcas.length &&
-      state.combustibles.length
-    )
-      return state.data.filter(
-        (obj) =>
-          state.categorias.includes(obj.categoria) &&
-          state.marcas.includes(obj.marca) &&
-          state.combustibles.includes(obj.combustible)
-      );
-    else if (state.categorias.length && state.marcas.length)
-      return state.data.filter(
-        (obj) =>
-          state.categorias.includes(obj.categoria) &&
-          state.marcas.includes(obj.marca)
-      );
-    else if (state.categorias.length && state.transmisiones.length)
-      return state.data.filter(
-        (obj) =>
-          state.categorias.includes(obj.categoria) &&
-          state.transmisiones.includes(obj.transmision)
-      );
-    else if (state.categorias.length && state.combustibles.length)
-      return state.data.filter(
-        (obj) =>
-          state.categorias.includes(obj.categoria) &&
-          state.combustibles.includes(obj.combustible)
-      );
-    else if (state.transmisiones.length && state.combustibles.length)
-      return state.data.filter(
-        (obj) =>
-          state.transmisiones.includes(obj.transmision) &&
-          state.combustibles.includes(obj.combustible)
-      );
-    else if (state.transmisiones.length && state.marcas.length)
-      return state.data.filter(
-        (obj) =>
-          state.transmisiones.includes(obj.transmision) &&
-          state.marcas.includes(obj.marca)
-      );
-    else if (state.combustibles.length && state.marcas.length)
-      return state.data.filter(
-        (obj) =>
-          state.combustibles.includes(obj.combustible) &&
-          state.marcas.includes(obj.marca)
-      );
-    else if (state.categorias.length)
-      return state.data.filter(
-        (obj) =>
-          state.categorias.includes(obj.categoria) &&
-          state.minMaxYear[0] <= obj.anio &&
-          state.minMaxYear[1] >= obj.anio
-      );
-    else if (state.marcas.length)
-      return state.data.filter((obj) => state.marcas.includes(obj.marca));
-    else if (state.transmisiones.length)
-      return state.data.filter(
-        (obj) =>
-          state.transmisiones.includes(obj.transmision) &&
-          state.minMaxYear[0] <= obj.anio &&
-          state.minMaxYear[1] >= obj.anio
-      );
-    else if (state.combustibles.length)
-      return state.data.filter(
-        (obj) =>
-          state.combustibles.includes(obj.combustible) &&
-          state.minMaxYear[0] <= obj.anio &&
-          state.minMaxYear[1] >= obj.anio
-      );
-    else if (
-      !state.categorias.length &&
-      !state.marcas.length &&
-      !state.transmisiones.length &&
-      !state.combustibles.length
-    )
-      return state.data.filter(
-        (obj) =>
-          state.minMaxYear[0] <= obj.anio &&
-          state.minMaxYear[1] >= obj.anio &&
-          state.minMaxPrices[0] <= obj.precio &&
-          state.minMaxPrices[1] >= obj.precio
-      );
-    else return state.data;
+    // if (
+    //   state.categorias.length &&
+    //   state.marcas.length &&
+    //   state.transmisiones.length &&
+    //   state.combustibles.length
+    // )
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.categorias.includes(obj.categoria) &&
+    //       state.marcas.includes(obj.marca) &&
+    //       state.transmisiones.includes(obj.transmision) &&
+    //       state.combustibles.includes(obj.combustible) &&
+    //       state.minMaxYear[0] <= obj.anio &&
+    //       state.minMaxYear >= obj.anio
+    //   );
+    // // if(state.minMaxYear) return state.data.filter(obj => state.minMaxYear[0] <= obj.anio)
+    // else if (
+    //   state.categorias.length &&
+    //   state.marcas.length &&
+    //   state.transmisiones.length
+    // )
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.categorias.includes(obj.categoria) &&
+    //       state.marcas.includes(obj.marca) &&
+    //       state.transmisiones.includes(obj.transmision)
+    //   );
+    // else if (
+    //   state.categorias.length &&
+    //   state.marcas.length &&
+    //   state.combustibles.length
+    // )
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.categorias.includes(obj.categoria) &&
+    //       state.marcas.includes(obj.marca) &&
+    //       state.combustibles.includes(obj.combustible)
+    //   );
+    // else if (state.categorias.length && state.marcas.length)
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.categorias.includes(obj.categoria) &&
+    //       state.marcas.includes(obj.marca)
+    //   );
+    // else if (state.categorias.length && state.transmisiones.length)
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.categorias.includes(obj.categoria) &&
+    //       state.transmisiones.includes(obj.transmision)
+    //   );
+    // else if (state.categorias.length && state.combustibles.length)
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.categorias.includes(obj.categoria) &&
+    //       state.combustibles.includes(obj.combustible)
+    //   );
+    // else if (state.transmisiones.length && state.combustibles.length)
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.transmisiones.includes(obj.transmision) &&
+    //       state.combustibles.includes(obj.combustible)
+    //   );
+    // else if (state.transmisiones.length && state.marcas.length)
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.transmisiones.includes(obj.transmision) &&
+    //       state.marcas.includes(obj.marca)
+    //   );
+    // else if (state.combustibles.length && state.marcas.length)
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.combustibles.includes(obj.combustible) &&
+    //       state.marcas.includes(obj.marca)
+    //   );
+    // else if (state.categorias.length)
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.categorias.includes(obj.categoria) &&
+    //       state.minMaxYear[0] <= obj.anio &&
+    //       state.minMaxYear[1] >= obj.anio
+    //   );
+    // else if (state.marcas.length)
+    //   return state.data.filter((obj) => state.marcas.includes(obj.marca));
+    // else if (state.transmisiones.length)
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.transmisiones.includes(obj.transmision) &&
+    //       state.minMaxYear[0] <= obj.anio &&
+    //       state.minMaxYear[1] >= obj.anio
+    //   );
+    // else if (state.combustibles.length)
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.combustibles.includes(obj.combustible) &&
+    //       state.minMaxYear[0] <= obj.anio &&
+    //       state.minMaxYear[1] >= obj.anio
+    //   );
+    // else if (
+    //   !state.categorias.length &&
+    //   !state.marcas.length &&
+    //   !state.transmisiones.length &&
+    //   !state.combustibles.length
+    // )
+    //   return state.data.filter(
+    //     (obj) =>
+    //       state.minMaxYear[0] <= obj.anio &&
+    //       state.minMaxYear[1] >= obj.anio &&
+    //       state.minMaxPrices[0] <= obj.precio &&
+    //       state.minMaxPrices[1] >= obj.precio
+    //   );
+    // else return state.data;
     // FIN CHECKBOXES
   },
   /***  CATEGORIAS  ***/
@@ -229,10 +329,10 @@ export const getters = {
     const anios = state.seminuevosCars
       .map((el) => el.INTANO)
       .filter((anio, i, arr) => arr.indexOf(anio) === i);
-      const min = Math.min.apply(null, anios) || 0;
-      const max = Math.max.apply(null, anios) || 0;
-      arr.push(min);
-      arr.push(max);
+    const min = Math.min.apply(null, anios) || 0;
+    const max = Math.max.apply(null, anios) || 0;
+    arr.push(min);
+    arr.push(max);
     return arr;
   },
   /***  PRECIOS  ***/
@@ -264,13 +364,13 @@ export const mutations = {
   },
   fillminMaxYears(state, payload) {
     const data = payload;
-    if (!data) return
+    if (!data) return;
     state.minMaxYears = data;
     state.selectedYears = data;
   },
   fillminMaxPrices(state, payload) {
     const data = payload;
-    if (!data) return
+    if (!data) return;
     state.minMaxPrices = data;
     state.selectedPrices = data;
   },
@@ -311,11 +411,6 @@ export const mutations = {
     if (!carga) return;
     state.selectedPrices = carga;
   },
-
-
-
-
-
 
   seminuevosData(state, payload) {
     const data = payload;
@@ -451,10 +546,12 @@ export const actions = {
       );
       // All Data
       const roughData = response.data;
-      
+
       //Min Max years
       let minMaxyearsArr = [];
-      const minMaxYears = roughData.map((obj) => obj.INTANO).filter((el,i,arr) => arr.indexOf(el) === i);
+      const minMaxYears = roughData
+        .map((obj) => obj.INTANO)
+        .filter((el, i, arr) => arr.indexOf(el) === i);
       const min = Math.min.apply(Math, minMaxYears);
       minMaxyearsArr.push(min);
       const max = Math.max.apply(Math, minMaxYears);
@@ -462,13 +559,14 @@ export const actions = {
       commit("fillminMaxYears", minMaxyearsArr);
       // Min Max Prices
       let minMaxPricesArr = [];
-      const minMaxPrices = roughData.map((obj) => obj.VCHPRECIO).filter((el,i,arr) => arr.indexOf(el) === i);
+      const minMaxPrices = roughData
+        .map((obj) => obj.VCHPRECIO)
+        .filter((el, i, arr) => arr.indexOf(el) === i);
       const minPrice = Math.min.apply(Math, minMaxPrices);
       minMaxPricesArr.push(minPrice);
       const maxPrice = Math.max.apply(Math, minMaxPrices);
       minMaxPricesArr.push(maxPrice);
       commit("fillminMaxPrices", minMaxPricesArr);
-
       // Index data
       const indexData = roughData.sort(() => Math.random() - 0.5).slice(0, 6);
       commit("indexData", indexData);
