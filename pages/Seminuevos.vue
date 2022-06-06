@@ -9,7 +9,6 @@
         <div class="col-sm-12 col-md-8 col-lg-9">
           <!-- <FiltroResPag /> -->
           <!-- minifichas reciben de parametro los autos a mostrar por ahora no esta -->
-
           <!-- <Cards /> -->
         </div>
       </div>

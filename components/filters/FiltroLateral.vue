@@ -22,7 +22,6 @@ import Anios from "@/components/filters/lateralFilters/Anios.vue";
 import Precio from "@/components/filters/lateralFilters/Precio.vue";
 import Transmision from "@/components/filters/lateralFilters/Transmision.vue";
 import Combustible from "@/components/filters/lateralFilters/Combustible.vue";
-// import { mapState, mapGetters} from "vuex"
 import { mapGetters } from "vuex";
 
 export default {
@@ -31,10 +30,7 @@ export default {
     return {};
   },
   computed: {
-    // ...mapState(["carNumbers"]),
-    // ...mapState(["categoriasToggle", "marcaToggle", "aniosToggle", "precioToggle", "transmisionToggle", "combustibleToggle"]),
-    // ...mapGetters(["itemsCategorias", "itemsAnios", "itemsTransmision", "itemsCombustible", "itemsMarcas", "itemsPrecios"]),
-    ...mapGetters(["itemsCategorias", "brandsItems", "itemsAnios", "itemsTransmision", "itemsCombustible", "yearsItems"]),
+    ...mapGetters(["itemsCategorias", "brandsItems", "itemsAnios", "itemsTransmision", "itemsCombustible"]),
   },
   components: {
     Categorias,
@@ -44,13 +40,5 @@ export default {
     Transmision,
     Combustible,
   },
-  beforeMount() {
-    this.yearsItems;
-  },
-  created () {
-    this.yearsItems;
-  },
 };
 </script>
-
-<style></style>
