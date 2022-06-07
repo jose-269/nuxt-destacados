@@ -7,7 +7,7 @@
       <div
         class="container pb-2 ps-xs-5 ps-sm-5 ps-md-2 ps-lg-2 ps-xl-5 shadow p-3 bg-body rounded-bottom"
       >
-        <div class="form-check" v-for="(item, i) in brand" :key="i">
+        <div class="form-check" v-for="(item, index) in showitems" :key="index">
           <input
             class="form-check-input"
             type="checkbox"
@@ -22,15 +22,16 @@
             {{ item }}
           </label>
         </div>
-        <a
-          href="#"
+
+        <button
+          class="btn btn-danger py-0"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#panelsStayOpen-collapseOne"
-          aria-expanded="true"
-          aria-controls="panelsStayOpen-collapseOne"
-          >Ver más +</a
+          @click="toggleBrandsList"
         >
+          <span v-show="showitems.length <= 4"> Ver más <fa icon="angle-down"></fa></span>
+          <span v-show="showitems.length > 4"> Ver menos <fa icon="angle-up"></fa></span>
+        </button>
+        
       </div>
     </div>
   </div>
@@ -40,6 +41,11 @@
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "Marca",
+  data() {
+    return {
+      brandsList: false,
+    };
+  },
   computed: {
     brandValue: {
       get() {
@@ -49,13 +55,19 @@ export default {
         this.brandsObserver(v);
       },
     },
+    showitems() {
+      return !this.brandsList ? this.brands.slice(0, 4) : this.brands;
+    },
     ...mapState(["selectedBrands"]),
   },
   methods: {
+    toggleBrandsList() {
+      this.brandsList = !this.brandsList;
+    },
     ...mapMutations(["brandsObserver"]),
   },
   props: {
-    brand: {
+    brands: {
       type: Array,
     },
   },

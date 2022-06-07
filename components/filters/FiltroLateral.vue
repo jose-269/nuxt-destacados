@@ -4,7 +4,7 @@
       <div class="col-sm-12 px-0">
         <div class="pt-5">
           <Categorias :categories="itemsCategorias" />
-          <Brand :brand="brandsItems" />
+          <Brand :brands="brandsItems" />
           <Anios />
           <Precio />
           <Transmision :transmission="itemsTransmision" />

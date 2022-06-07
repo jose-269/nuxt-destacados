@@ -7,9 +7,9 @@
         :key="i"
       >
         <div class="card my-2" style="height: 100%">
-          <!-- <nuxt-link  :to="`/autos/${auto.id}`"> -->
+          <nuxt-link  :to="`/autos/${car.AUTOID}`">
             <img :src="car.url_foto_particular" class="card-img-top" alt="vehículo imagen" />
-          <!-- </nuxt-link > -->
+          </nuxt-link >
           <!-- <div class="form-check form-check-inline comparar-check p-0 rounded bg-light">
             <input class="form-check-input ms-1" type="checkbox" :value="auto" v-model="seleccionador"/>
             <label class="form-check-label ps-1"> Comparar </label>

@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
 import Slider from "~/components/MainSlider.vue";
 import RandomCars from "~/components/RandomCards.vue";
 import Mapa from "~/components/Mapa.vue";
@@ -22,15 +21,6 @@ export default {
     RandomCars,
     Nuestro,
     Mapa,
-  },
-  methods: {
-    ...mapActions(["getData"]),
-  },
-  computed: {
-
-  },
-  created() {
-    this.getData();
   },
 };
 </script>

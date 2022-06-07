@@ -24,12 +24,10 @@ import SeminuevosCars from "@/components/SeminuevosCars.vue";
 import FiltroLateral from "@/components/filters/FiltroLateral";
 // import Paginacion from "@/components/Paginacion";
 // import FiltroResPag from "@/components/filtros/FiltroResultadoDePagina";
-// import { mapState, mapGetters, mapMutations } from "vuex";
-import {mapState} from "vuex";
 export default {
   layout: "Destacados",
   computed: {
-    ...mapState(["seminuevosCars"]),
+    // ...mapState(["seminuevosCars"]),
   },
   components: {
     Slider,

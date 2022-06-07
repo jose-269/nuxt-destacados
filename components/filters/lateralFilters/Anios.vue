@@ -43,7 +43,6 @@ export default {
           return this.selectedYears;
         },
         set(v) {
-          console.log(v);
            this.yearsObserver(v);
         }
       },
