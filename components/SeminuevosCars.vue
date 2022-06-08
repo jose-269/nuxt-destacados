@@ -6,9 +6,9 @@
         v-for="(car, i) in getFiltrosLateral"
         :key="i"
       >
-        <div class="card my-2" style="height: 100%">
+        <div class="card my-2 ">
           <nuxt-link  :to="`/autos/${car.AUTOID}`">
-            <img :src="car.url_foto_particular" class="card-img-top" alt="vehículo imagen" />
+            <img :src="car.url_foto_particular" class="card-img-top" alt="vehículo imagen"  style="height: 100%;width:100%;object-fit: contain;" />
           </nuxt-link >
           <!-- <div class="form-check form-check-inline comparar-check p-0 rounded bg-light">
             <input class="form-check-input ms-1" type="checkbox" :value="auto" v-model="seleccionador"/>

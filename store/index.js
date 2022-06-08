@@ -13,6 +13,7 @@ export const state = () => ({
   selectedPrices: [],
   selectedTransmisions: [],
   selectedFuels: [],
+  photosArray: [],
 
 
 
@@ -394,6 +395,16 @@ export const mutations = {
     if (!carga) return;
     state.selectedPrices = carga;
   },
+  fillPhotosArray(state, payload) {
+    const carga = payload;
+    if (!carga) return;
+    state.photosArray = carga;
+  },
+
+
+
+
+
 
   seminuevosData(state, payload) {
     const data = payload;
@@ -505,7 +516,6 @@ export const actions = {
         Authorization: `Bearer ${"d9982530-725d-4944-9601-4840556c99a8"}`,
       },
     });
-
     try {
       const pageSizeResponse = await req.get(
         "/carDealers/stock/total?CLIENTEID=1066&TABLA=1"
@@ -516,7 +526,6 @@ export const actions = {
       );
       // All Data
       const roughData = response.data;
-
       //Min Max years
       let minMaxyearsArr = [];
       const minMaxYears = roughData
@@ -542,6 +551,24 @@ export const actions = {
       commit("indexData", indexData);
       //Seminuevos data
       commit("fillSeminuevosData", roughData);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async getPhotosArray({ commit }, payload) {
+    const req = axios.create({
+      baseURL: "https://api.servicesdtk2.cl/v1",
+      headers: {
+        Authorization: `Bearer ${"d9982530-725d-4944-9601-4840556c99a8"}`,
+      },
+    });
+    try {
+      const response = await req.get(
+        `/cars/single/images?AUTOID=${payload}`
+      );
+      const photosArray = response.data;
+      console.log(photosArray);
+      commit("fillPhotosArray", photosArray); 
     } catch (error) {
       console.log(error);
     }
