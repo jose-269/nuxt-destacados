@@ -12,9 +12,9 @@
       <div class="col-12 col-md-8 mt-4 px-xl-5">
         <!-- CAROUSEL SLIDER -->
         <div class="main-carousel-wrapper" >
-          <!-- <VueSlickCarousel style="cursor: pointer" ref="c1" :asNavFor="c2" :autoplaySpeed="3000" :arrows="true" :autoplay="true" :speed="500" :focusOnSelect="true" class="images-wrapper">
-            <div v-for="img in pictures" :key="img.img" @click="index = img.img" >
-              <img :src="img.img" alt="main-pic" class="main-carousel-wrapper__img image" @click="onModal(true)">
+          <VueSlickCarousel style="cursor: pointer" ref="c1" :asNavFor="c2" :autoplaySpeed="3000" :arrows="true" :autoplay="true" :speed="500" :focusOnSelect="true" class="images-wrapper">
+            <div v-for="img in photosArray" :key="img.VCHURL" @click="index = img.VCHURL" >
+              <img :src="img.VCHURL" alt="main-pic" class="main-carousel-wrapper__img image" @click="onModal(true)">
             </div>
             <template #prevArrow="arrowOption">
                <div class="custom-arrow-prev">
@@ -26,7 +26,7 @@
                 {{ arrowOption.currentSlide }}/{{ arrowOption.slideCount }}
               </div>
             </template>
-          </VueSlickCarousel> -->
+          </VueSlickCarousel>
         </div>
         <div class="bg-dark indicator-wrapper">
           <div class="indicator-wrapper__within">
@@ -149,6 +149,14 @@ import { mapState, mapActions } from 'vuex';
 export default {
   name: "auto",
   layout: "Destacados",
+  data() {
+    return {
+      index: null,
+      active: 0,
+      c1: undefined,
+      c2: undefined,
+    }
+  },
   computed: {
     getFicha() {
       const finder = this.seminuevosCars.find( el => el.AUTOID == this.$route.params.id);
@@ -170,7 +178,29 @@ export default {
     ...mapState(["seminuevosCars", "photosArray"]),
   },
   methods: {
+    setActive(index) {
+      let active = index;
+      if (index === this.pics.length) active;
+      else if (index === -1) active = this.pics.length - 1;
+      this.active = active;
+    },
+    onModal(on) {
+      this.setModal(on);
+    },
     ...mapActions(["getPhotosArray"]),
+  },
+  mounted () {
+    this.c1 = this.$refs.c1;
+    this.c2 = this.$refs.c2;;
+  },
+    watch: {
+    showModal: function() {
+      if(this.showModal){
+        document.documentElement.style.overflow = 'hidden'
+        return
+      }
+      document.documentElement.style.overflow = 'auto'
+    }
   },
 };
 </script>
