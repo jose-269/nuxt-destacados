@@ -14,6 +14,10 @@ export const state = () => ({
   selectedTransmisions: [],
   selectedFuels: [],
 
+
+
+  
+
   seminuevos: [],
   carNumbers: 0,
   // SPINNER
