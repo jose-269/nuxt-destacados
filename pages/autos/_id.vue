@@ -1,28 +1,43 @@
 <template>
-
   <div class="container-lg">
     <div class="row">
       <div v-if="getFicha" class="text-end pe-3 previous-button">
-          <nuxt-link to="/seminuevos">
-            <button class="btn btn-danger rounded-circle ">
-              <fa icon="angle-left" style="font-size:30px"></fa>
-            </button>
-          </nuxt-link>
-        </div>
+        <nuxt-link to="/seminuevos">
+          <button class="btn btn-danger rounded-circle">
+            <fa icon="angle-left" style="font-size: 30px"></fa>
+          </button>
+        </nuxt-link>
+      </div>
       <div class="col-12 col-md-8 mt-4 px-xl-5">
         <!-- CAROUSEL SLIDER -->
-        <div class="main-carousel-wrapper" >
-          <VueSlickCarousel style="cursor: pointer" ref="c1" :asNavFor="c2" :autoplaySpeed="3000" :arrows="true" :autoplay="true" :speed="500" :focusOnSelect="true" class="images-wrapper">
-            <div v-for="img in photosArray" :key="img.VCHURL" @click="index = img.VCHURL" >
-              <img :src="img.VCHURL" alt="main-pic" class="main-carousel-wrapper__img image" @click="onModal(true)">
+        <div class="main-carousel-wrapper">
+          <VueSlickCarousel
+            style="cursor: pointer"
+            :arrows="true"
+            :fade="true"
+            :autoplay="true"
+            :speed="500"
+            :slidesToShow="1"
+            :asNavFor="$refs.indicators"
+            ref="main"
+            :focusOnSelect="true"
+            v-if="photosArray.length"
+            class="images-wrapper"
+          >
+            <div v-for="img in photosArray" :key="img.VCHURL" @click="index = img.VCHURL">
+              <img
+                :src="img.VCHURL"
+                alt="main-pic"
+                class="main-carousel-wrapper__img image"
+              />
             </div>
             <template #prevArrow="arrowOption">
-               <div class="custom-arrow-prev">
+              <div class="custom-arrow-prev">
                 {{ arrowOption.currentSlide }}/{{ arrowOption.slideCount }}
               </div>
             </template>
             <template #nextArrow="arrowOption">
-               <div class="custom-arrow-next">
+              <div class="custom-arrow-next">
                 {{ arrowOption.currentSlide }}/{{ arrowOption.slideCount }}
               </div>
             </template>
@@ -30,17 +45,30 @@
         </div>
         <div class="bg-dark indicator-wrapper">
           <div class="indicator-wrapper__within">
-            <!-- <VueSlickCarousel ref="c2"  :asNavFor="c1" :autoplay="true" :speed="500" :autoplaySpeed="3000" :slidesToShow="6" :arrows="false" :focusOnSelect="true">
-              <div v-for="img,i in pictures" :key="i" >
-                <img :src="img.img" alt="indicator-pic" class="indicator-carousel" >
+            <VueSlickCarousel
+              ref="c2"
+              :asNavFor="c1"
+              :autoplay="true"
+              :speed="500"
+              :autoplaySpeed="3000"
+              :slidesToShow="6"
+              :arrows="false"
+              :focusOnSelect="true"
+              v-if="photosArray.length"
+            >
+              <div v-for="(img) in photosArray" :key="img.VCHURL">
+                <img
+                  :src="img.VCHURL"
+                  alt="indicator-pic"
+                  class="indicator-carousel d-inline"
+                />
               </div>
-            </VueSlickCarousel> -->
+            </VueSlickCarousel>
           </div>
         </div>
-          <!-- FIN CAROUSEL -->
+        <!-- FIN CAROUSEL -->
       </div>
       <!-- MODAL -->
-
     </div>
     <div class="row mb-5">
       <div class="col-12 col-md-8 mt-3">
@@ -87,8 +115,12 @@
               <a href="#" style="text-decoration: none">+56-51-2296917</a>
             </div>
             <div class="waze-button my-auto">
-              <a href="https://ul.waze.com/ul?ll=-33.45408800%2C-70.60303410&navigate=yes&utm_campaign=waze_website&utm_source=waze_website&utm_medium=lm_share_location" target="_blank">
-              <i class="fab fa-waze fa-2x p-1"></i></a>
+              <a
+                href="https://ul.waze.com/ul?ll=-33.45408800%2C-70.60303410&navigate=yes&utm_campaign=waze_website&utm_source=waze_website&utm_medium=lm_share_location"
+                target="_blank"
+              >
+                <i class="fab fa-waze fa-2x p-1"></i
+              ></a>
             </div>
           </div>
           <div class="mapa pt-4">
@@ -107,9 +139,9 @@
       </div>
     </div>
     <div class="row">
-      <div class=" text-center">
-          <img src="" class="img-fluid" alt="banner-1">
-        </div>
+      <div class="text-center">
+        <img src="" class="img-fluid" alt="banner-1" />
+      </div>
     </div>
     <div class="row mb-5">
       <div class="col-12">
@@ -136,7 +168,7 @@
     </div>
   </div>
 
-<!-- <div>
+  <!-- <div>
   <div >
     <img v-for="(photos, i) in photosArray" :key="i" :src="photos.VCHURL" :alt="photos.VCHNOMBRE" width="300">
   </div>
@@ -145,22 +177,28 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 export default {
   name: "auto",
   layout: "Destacados",
   data() {
     return {
+      // slickOptions: {
+      //   slidesToShow: 3,
+      //   arrows: false,
+      // },
       index: null,
       active: 0,
       c1: undefined,
       c2: undefined,
-    }
+    };
   },
   computed: {
     getFicha() {
-      const finder = this.seminuevosCars.find( el => el.AUTOID == this.$route.params.id);
-      if(!finder) return;
+      const finder = this.seminuevosCars.find(
+        (el) => el.AUTOID == this.$route.params.id
+      );
+      if (!finder) return;
       const fichaAmpliada = {
         AUTODES: finder.AUTODES,
         AUTOID: finder.AUTOID,
@@ -178,31 +216,98 @@ export default {
     ...mapState(["seminuevosCars", "photosArray"]),
   },
   methods: {
+    ...mapActions(["getPhotosArray"]),
     setActive(index) {
       let active = index;
       if (index === this.pics.length) active;
       else if (index === -1) active = this.pics.length - 1;
       this.active = active;
     },
-    onModal(on) {
-      this.setModal(on);
-    },
-    ...mapActions(["getPhotosArray"]),
+    // onModal(on) {
+    //   this.setModal(on);
+    // },
   },
-  mounted () {
+  created () {
     this.c1 = this.$refs.c1;
     this.c2 = this.$refs.c2;;
   },
-    watch: {
-    showModal: function() {
-      if(this.showModal){
-        document.documentElement.style.overflow = 'hidden'
-        return
-      }
-      document.documentElement.style.overflow = 'auto'
-    }
-  },
+  //   watch: {
+  //   showModal: function() {
+  //     if(this.showModal){
+  //       document.documentElement.style.overflow = 'hidden'
+  //       return
+  //     }
+  //     document.documentElement.style.overflow = 'auto'
+  //   }
+  // },
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+ .previous-button {
+    margin-top: -70px;
+    position: relative;
+    right: 0px;
+    z-index: 1;
+  }
+.enviar-cotizacion {
+  margin-top: -20px;
+}
+.des-lista {
+  columns: 2;
+  list-style: none;
+  margin-right: 0;
+}
+  .textDes {
+    padding: 1% 2%;
+    color: #000;
+    font-size: 0.6875rem;
+    text-align: justify;
+  }
+.label-credito {
+  font-size: 13px;
+}
+.waze-button {
+  background-color: #fff;
+  height: fit-content;
+  border: 4px solid #42D5FF;
+  border-radius: 13px 13px;
+  a {
+    color: #395359;
+  }
+}
+.indicator-carousel {
+  width: 121.666667px;
+  height: 91.3333333px;
+}
+.custom-arrow-prev {
+  z-index: 200;
+}
+.custom-arrow-next {
+  z-index: 200;
+  right: -165px;
+}
+
+.slick-prev::before {
+  color: black !important;
+  font-size: 50px;
+  line-height: 1;
+  position: absolute;
+  display: inline-block;
+  left: 40px;
+  opacity: 0.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.slick-next::before {
+  color: black !important;
+  font-size: 50px;
+  line-height: 1;
+  position: absolute;
+  display: inline-block;
+  right: 180px;
+  opacity: 0.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+</style>
